@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Analyze your credit score with AI-powered risk classification. Get financial improvement guidance and recommendations.">
+  <title>Credit Score Analyzer — LoanLess AI</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-shield-halved"></i>
+        <span>LoanLess AI</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="eligibility.html"><i class="fas fa-clipboard-check"></i> Eligibility</a></li>
+        <li><a href="credit-score.html" class="active"><i class="fas fa-chart-line"></i> Credit Score</a></li>
+        <li><a href="emi-calculator.html"><i class="fas fa-calculator"></i> EMI Calculator</a></li>
+        <li><a href="ai-tips.html"><i class="fas fa-robot"></i> AI Tips</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <div class="page-header">
+      <span class="section-label"><i class="fas fa-chart-line"></i> Credit Analysis</span>
+      <h1>Credit Score <span class="text-gradient">Analyzer</span></h1>
+      <p>Understand your financial credibility and get personalized improvement guidance powered by AI.</p>
+    </div>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="form-container">
+        <div class="glass-card">
+          <form id="creditScoreForm" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="creditScoreInput">
+                <i class="fas fa-star-half-stroke"></i> Your Credit Score
+              </label>
+              <input type="number" class="form-input" id="creditScoreInput" placeholder="Enter score between 300–900" min="300" max="900" required>
+              <span class="form-hint">CIBIL / TransUnion / Experian score (300–900)</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="creditAge">
+                <i class="fas fa-clock-rotate-left"></i> Credit History Age (Years)
+              </label>
+              <input type="number" class="form-input" id="creditAge" placeholder="e.g., 5" min="0" max="50">
+              <span class="form-hint">How long you've had credit accounts</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="creditUtil">
+                <i class="fas fa-percent"></i> Credit Utilization (%)
+              </label>
+              <input type="number" class="form-input" id="creditUtil" placeholder="e.g., 30" min="0" max="100">
+              <span class="form-hint">Percentage of available credit you use</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+              <i class="fas fa-magnifying-glass-chart"></i> Analyze Score
+            </button>
+          </form>
+        </div>
+
+        <!-- Credit Score Result -->
+        <div class="result-panel" id="creditResult">
+          <div class="result-card neutral">
+
+            <!-- Score Gauge -->
+            <div class="gauge-container">
+              <div class="gauge">
+                <svg viewBox="0 0 220 120" style="width: 100%; height: 100%;">
+                  <!-- Background arc -->
+                  <path d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="14" stroke-linecap="round"/>
+                  <!-- Filled arc -->
+                  <path id="gaugeArc" d="M 20 110 A 90 90 0 0 1 200 110" fill="none" stroke="url(#gaugeGradient)" stroke-width="14" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" class="gauge-fill"/>
+                  <defs>
+                    <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#f43f5e"/>
+                      <stop offset="50%" stop-color="#f59e0b"/>
+                      <stop offset="100%" stop-color="#10b981"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="gauge-label">
+                  <span class="gauge-value" id="gaugeScore">—</span>
+                  <span class="gauge-text">Credit Score</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="result-header" style="justify-content: center;">
+              <div style="text-align: center;">
+                <div class="result-title" id="creditTitle"></div>
+                <div class="result-subtitle" id="creditSubtitle"></div>
+              </div>
+            </div>
+
+            <div class="result-details" id="creditDetails">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Recommendations -->
+            <div id="creditRecommendations" style="margin-top: var(--space-6);"></div>
+
+            <!-- AI Analysis -->
+            <div class="ai-response" id="creditAiAnalysis">
+              <div class="ai-response-header">
+                <span class="ai-badge"><i class="fas fa-wand-magic-sparkles"></i> AI Credit Advisor</span>
+              </div>
+              <div class="ai-response-content" id="creditAiContent">
+                <div class="ai-loading">
+                  <div class="spinner"></div>
+                  Generating credit improvement plan...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Credit Score Guide -->
+    <section class="section">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label"><i class="fas fa-book-open"></i> Score Guide</span>
+        <h2 class="section-title">Understanding <span class="text-gradient">Credit Scores</span></h2>
+      </div>
+
+      <div class="features-grid" style="max-width: 900px;">
+        <div class="glass-card feature-card animate-on-scroll">
+          <div class="feature-icon icon-emerald">
+            <i class="fas fa-trophy"></i>
+          </div>
+          <h3>Excellent (750–900)</h3>
+          <p>You're a low-risk borrower. Enjoy the best interest rates, highest credit limits, and premium loan offers from all financial institutions.</p>
+        </div>
+        <div class="glass-card feature-card animate-on-scroll animate-delay-1">
+          <div class="feature-icon icon-amber">
+            <i class="fas fa-thumbs-up"></i>
+          </div>
+          <h3>Good (650–749)</h3>
+          <p>You have a fair credit profile. Most lenders will approve your applications with competitive rates. Minor improvements can unlock premium benefits.</p>
+        </div>
+        <div class="glass-card feature-card animate-on-scroll animate-delay-2">
+          <div class="feature-icon icon-rose">
+            <i class="fas fa-triangle-exclamation"></i>
+          </div>
+          <h3>Poor (300–649)</h3>
+          <p>Your credit needs attention. Focus on timely repayments, reducing outstanding debts, and improving credit utilization to boost your score.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">LoanLess AI</div>
+      <p class="footer-text">AI-Powered Financial Intelligence Platform</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="eligibility.html">Loan Eligibility</a>
+        <a href="credit-score.html">Credit Score</a>
+        <a href="emi-calculator.html">EMI Calculator</a>
+        <a href="ai-tips.html">AI Tips</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

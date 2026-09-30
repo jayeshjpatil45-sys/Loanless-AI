@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get personalized AI-powered financial tips, loan recommendations, and credit improvement advice from Claude AI.">
+  <title>AI Financial Tips — LoanLess AI</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-shield-halved"></i>
+        <span>LoanLess AI</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="eligibility.html"><i class="fas fa-clipboard-check"></i> Eligibility</a></li>
+        <li><a href="credit-score.html"><i class="fas fa-chart-line"></i> Credit Score</a></li>
+        <li><a href="emi-calculator.html"><i class="fas fa-calculator"></i> EMI Calculator</a></li>
+        <li><a href="ai-tips.html" class="active"><i class="fas fa-robot"></i> AI Tips</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <div class="page-header">
+      <span class="section-label"><i class="fas fa-robot"></i> AI Advisor</span>
+      <h1>AI Financial <span class="text-gradient">Advisor</span></h1>
+      <p>Get personalized financial guidance, loan recommendations, and credit improvement advice powered by Claude AI.</p>
+    </div>
+
+    <!-- Quick Tips Section -->
+    <section class="section" style="padding-top: 0;">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label"><i class="fas fa-lightbulb"></i> Quick Tips</span>
+        <h2 class="section-title">Essential Financial <span class="text-gradient">Tips</span></h2>
+      </div>
+
+      <div class="tips-grid">
+        <div class="glass-card tip-card animate-on-scroll">
+          <span class="tip-number">1</span>
+          <h3 style="margin-top: var(--space-4);">Maintain a Credit Score Above 750</h3>
+          <p>A score above 750 unlocks the best interest rates and premium loan offers. Pay bills on time, keep credit utilization below 30%, and avoid multiple loan applications.</p>
+        </div>
+        <div class="glass-card tip-card animate-on-scroll animate-delay-1">
+          <span class="tip-number">2</span>
+          <h3 style="margin-top: var(--space-4);">Follow the 50/30/20 Budget Rule</h3>
+          <p>Allocate 50% of income to needs, 30% to wants, and 20% to savings & debt repayment. This ensures sustainable financial health and loan repayment capacity.</p>
+        </div>
+        <div class="glass-card tip-card animate-on-scroll animate-delay-2">
+          <span class="tip-number">3</span>
+          <h3 style="margin-top: var(--space-4);">Keep EMI-to-Income Ratio Below 40%</h3>
+          <p>Lenders prefer borrowers whose total EMI obligations don't exceed 40% of monthly income. This improves your loan approval chances significantly.</p>
+        </div>
+        <div class="glass-card tip-card animate-on-scroll animate-delay-3">
+          <span class="tip-number">4</span>
+          <h3 style="margin-top: var(--space-4);">Build an Emergency Fund First</h3>
+          <p>Maintain 6-12 months of expenses in liquid savings before taking loans. This protects you from defaulting during unexpected financial disruptions.</p>
+        </div>
+        <div class="glass-card tip-card animate-on-scroll animate-delay-1">
+          <span class="tip-number">5</span>
+          <h3 style="margin-top: var(--space-4);">Compare Loan Offers Thoroughly</h3>
+          <p>Interest rates vary by 1-3% across lenders. A 1% difference on a ₹50L home loan over 20 years can save over ₹7 lakhs. Always compare before committing.</p>
+        </div>
+        <div class="glass-card tip-card animate-on-scroll animate-delay-2">
+          <span class="tip-number">6</span>
+          <h3 style="margin-top: var(--space-4);">Make Prepayments When Possible</h3>
+          <p>Even small prepayments significantly reduce interest burden over the loan tenure. Prioritize prepaying high-interest loans first for maximum savings.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Chat Section -->
+    <section class="section">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label"><i class="fas fa-comments"></i> AI Chat</span>
+        <h2 class="section-title">Ask the <span class="text-gradient">AI Advisor</span></h2>
+        <p class="section-subtitle">Get personalized financial advice by asking questions about loans, credit, EMIs, and financial planning.</p>
+      </div>
+
+      <div class="chat-container">
+        <div class="glass-card">
+          <!-- API Key Configuration -->
+          <div id="apiKeySection" style="margin-bottom: var(--space-6);">
+            <div class="form-group" style="margin-bottom: var(--space-3);">
+              <label class="form-label" for="claudeApiKey">
+                <i class="fas fa-key"></i> Claude API Key
+              </label>
+              <input type="password" class="form-input" id="claudeApiKey" placeholder="Enter your Anthropic API key (sk-ant-...)">
+              <span class="form-hint">Your API key is stored locally and never sent to our servers</span>
+            </div>
+            <button class="btn btn-secondary" onclick="saveApiKey()" style="width: 100%; justify-content: center;">
+              <i class="fas fa-save"></i> Save API Key
+            </button>
+          </div>
+
+          <!-- Chat Messages -->
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-message ai">
+              <div class="chat-avatar ai"><i class="fas fa-robot"></i></div>
+              <div class="chat-bubble">
+                👋 Hello! I'm your AI Financial Advisor. I can help you with:
+
+• <strong>Loan eligibility</strong> assessment
+• <strong>Credit score</strong> improvement tips
+• <strong>EMI optimization</strong> strategies
+• <strong>Financial planning</strong> guidance
+• <strong>Debt management</strong> advice
+
+What would you like to know?
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Prompts -->
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-4); padding: 0 var(--space-4);">
+            <button class="btn btn-secondary" style="font-size: var(--fs-xs); padding: var(--space-2) var(--space-3);" onclick="sendQuickPrompt('How can I improve my credit score from 650 to 750?')">
+              <i class="fas fa-chart-line"></i> Improve Credit
+            </button>
+            <button class="btn btn-secondary" style="font-size: var(--fs-xs); padding: var(--space-2) var(--space-3);" onclick="sendQuickPrompt('What is the best strategy to pay off a home loan of 50 lakhs faster?')">
+              <i class="fas fa-house"></i> Home Loan Tips
+            </button>
+            <button class="btn btn-secondary" style="font-size: var(--fs-xs); padding: var(--space-2) var(--space-3);" onclick="sendQuickPrompt('Should I take a personal loan at 12% interest rate with a salary of 60000?')">
+              <i class="fas fa-scale-balanced"></i> Loan Advice
+            </button>
+            <button class="btn btn-secondary" style="font-size: var(--fs-xs); padding: var(--space-2) var(--space-3);" onclick="sendQuickPrompt('Explain the 50/30/20 budgeting rule and how it applies to loan repayment')">
+              <i class="fas fa-piggy-bank"></i> Budget Rule
+            </button>
+          </div>
+
+          <!-- Chat Input -->
+          <div class="chat-input-area" style="padding: 0 var(--space-4) var(--space-4);">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask a financial question..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+            <button class="btn btn-primary" onclick="sendChatMessage()" id="sendBtn">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">LoanLess AI</div>
+      <p class="footer-text">AI-Powered Financial Intelligence Platform</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="eligibility.html">Loan Eligibility</a>
+        <a href="credit-score.html">Credit Score</a>
+        <a href="emi-calculator.html">EMI Calculator</a>
+        <a href="ai-tips.html">AI Tips</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

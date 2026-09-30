@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Check your loan eligibility instantly with AI-powered analysis. Get personalized recommendations and risk assessment.">
+  <title>Loan Eligibility Checker — LoanLess AI</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-shield-halved"></i>
+        <span>LoanLess AI</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="eligibility.html" class="active"><i class="fas fa-clipboard-check"></i> Eligibility</a></li>
+        <li><a href="credit-score.html"><i class="fas fa-chart-line"></i> Credit Score</a></li>
+        <li><a href="emi-calculator.html"><i class="fas fa-calculator"></i> EMI Calculator</a></li>
+        <li><a href="ai-tips.html"><i class="fas fa-robot"></i> AI Tips</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <span class="section-label"><i class="fas fa-clipboard-check"></i> Loan Eligibility</span>
+      <h1>Check Your <span class="text-gradient">Loan Eligibility</span></h1>
+      <p>Enter your financial details below and get instant AI-powered eligibility analysis with personalized recommendations.</p>
+    </div>
+
+    <!-- Eligibility Form -->
+    <section class="section" style="padding-top: 0;">
+      <div class="form-container">
+        <div class="glass-card">
+          <form id="eligibilityForm" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="applicantName">
+                <i class="fas fa-user"></i> Applicant Name
+              </label>
+              <input type="text" class="form-input" id="applicantName" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="monthlySalary">
+                  <i class="fas fa-indian-rupee-sign"></i> Monthly Salary (₹)
+                </label>
+                <input type="number" class="form-input" id="monthlySalary" placeholder="e.g., 50000" min="0" required>
+                <span class="form-hint">Minimum ₹30,000 required</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="creditScoreElig">
+                  <i class="fas fa-star"></i> Credit Score
+                </label>
+                <input type="number" class="form-input" id="creditScoreElig" placeholder="e.g., 750" min="300" max="900" required>
+                <span class="form-hint">Score between 300–900</span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="existingEMI">
+                  <i class="fas fa-receipt"></i> Existing EMI (₹)
+                </label>
+                <input type="number" class="form-input" id="existingEMI" placeholder="e.g., 10000" min="0" required>
+                <span class="form-hint">Must be below ₹20,000</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="applicantAge">
+                  <i class="fas fa-calendar-days"></i> Age (Years)
+                </label>
+                <input type="number" class="form-input" id="applicantAge" placeholder="e.g., 28" min="18" max="70" required>
+                <span class="form-hint">Minimum 21 years</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="employmentType">
+                <i class="fas fa-briefcase"></i> Employment Type
+              </label>
+              <select class="form-input" id="employmentType">
+                <option value="salaried">Salaried</option>
+                <option value="self-employed">Self-Employed</option>
+                <option value="business">Business Owner</option>
+                <option value="freelancer">Freelancer</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;" id="checkEligibilityBtn">
+              <i class="fas fa-magnifying-glass-chart"></i> Check Eligibility
+            </button>
+          </form>
+        </div>
+
+        <!-- Result Panel -->
+        <div class="result-panel" id="eligibilityResult">
+          <div class="result-card" id="resultCard">
+            <div class="result-header">
+              <div class="result-status-icon" id="resultStatusIcon">
+                <i id="resultIcon"></i>
+              </div>
+              <div>
+                <div class="result-title" id="resultTitle"></div>
+                <div class="result-subtitle" id="resultSubtitle"></div>
+              </div>
+            </div>
+
+            <div class="result-details" id="resultDetails">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Risk Assessment Bar -->
+            <div id="riskSection" style="margin-bottom: var(--space-6);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                <span style="font-size: var(--fs-sm); font-weight: 600;">Risk Assessment</span>
+                <span style="font-size: var(--fs-xs); color: var(--text-muted);" id="riskLabel"></span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="riskBar" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- AI Analysis -->
+            <div class="ai-response" id="aiAnalysis">
+              <div class="ai-response-header">
+                <span class="ai-badge"><i class="fas fa-wand-magic-sparkles"></i> AI Analysis</span>
+              </div>
+              <div class="ai-response-content" id="aiAnalysisContent">
+                <div class="ai-loading">
+                  <div class="spinner"></div>
+                  Generating personalized analysis...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">LoanLess AI</div>
+      <p class="footer-text">AI-Powered Financial Intelligence Platform</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="eligibility.html">Loan Eligibility</a>
+        <a href="credit-score.html">Credit Score</a>
+        <a href="emi-calculator.html">EMI Calculator</a>
+        <a href="ai-tips.html">AI Tips</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

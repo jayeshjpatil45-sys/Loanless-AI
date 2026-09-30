@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculate your monthly EMI with the reducing-balance formula. Plan loan repayments and get AI-powered optimization guidance.">
+  <title>EMI Calculator — LoanLess AI</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-shield-halved"></i>
+        <span>LoanLess AI</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="eligibility.html"><i class="fas fa-clipboard-check"></i> Eligibility</a></li>
+        <li><a href="credit-score.html"><i class="fas fa-chart-line"></i> Credit Score</a></li>
+        <li><a href="emi-calculator.html" class="active"><i class="fas fa-calculator"></i> EMI Calculator</a></li>
+        <li><a href="ai-tips.html"><i class="fas fa-robot"></i> AI Tips</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <div class="page-header">
+      <span class="section-label"><i class="fas fa-calculator"></i> EMI Planner</span>
+      <h1>EMI <span class="text-gradient">Calculator</span></h1>
+      <p>Calculate your monthly loan repayment using the reducing-balance EMI formula and plan your finances with AI guidance.</p>
+    </div>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="form-container">
+        <div class="glass-card">
+          <form id="emiForm" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="loanAmount">
+                <i class="fas fa-indian-rupee-sign"></i> Loan Amount (₹)
+              </label>
+              <input type="number" class="form-input" id="loanAmount" placeholder="e.g., 1000000" min="10000" required>
+              <span class="form-hint">Minimum ₹10,000</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="interestRate">
+                  <i class="fas fa-percent"></i> Annual Interest Rate (%)
+                </label>
+                <input type="number" class="form-input" id="interestRate" placeholder="e.g., 8.5" min="0.1" max="36" step="0.1" required>
+                <span class="form-hint">Annual rate (0.1% – 36%)</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loanTenure">
+                  <i class="fas fa-calendar-days"></i> Loan Tenure (Years)
+                </label>
+                <input type="number" class="form-input" id="loanTenure" placeholder="e.g., 5" min="1" max="30" required>
+                <span class="form-hint">1 to 30 years</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="loanType">
+                <i class="fas fa-tags"></i> Loan Type
+              </label>
+              <select class="form-input" id="loanType">
+                <option value="home">Home Loan</option>
+                <option value="personal">Personal Loan</option>
+                <option value="car">Car / Auto Loan</option>
+                <option value="education">Education Loan</option>
+                <option value="business">Business Loan</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center;">
+              <i class="fas fa-calculator"></i> Calculate EMI
+            </button>
+          </form>
+        </div>
+
+        <!-- EMI Result -->
+        <div class="result-panel" id="emiResult">
+          <div class="result-card neutral">
+            <div class="result-header" style="justify-content: center;">
+              <div style="text-align: center;">
+                <div class="result-subtitle">Your Monthly EMI</div>
+                <div class="result-title text-gradient" id="emiValue" style="font-size: var(--fs-4xl);"></div>
+              </div>
+            </div>
+
+            <div class="emi-breakdown">
+              <div class="emi-item">
+                <div class="emi-item-label">Principal</div>
+                <div class="emi-item-value text-info" id="emiPrincipal"></div>
+              </div>
+              <div class="emi-item">
+                <div class="emi-item-label">Total Interest</div>
+                <div class="emi-item-value text-warning" id="emiInterest"></div>
+              </div>
+              <div class="emi-item">
+                <div class="emi-item-label">Total Payment</div>
+                <div class="emi-item-value text-primary" id="emiTotal"></div>
+              </div>
+            </div>
+
+            <!-- Visual Ratio Bar -->
+            <div style="margin: var(--space-6) 0;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
+                <span style="font-size: var(--fs-xs); color: var(--accent-cyan);">● Principal</span>
+                <span style="font-size: var(--fs-xs); color: var(--accent-amber);">● Interest</span>
+              </div>
+              <div style="display: flex; height: 12px; border-radius: var(--radius-full); overflow: hidden; background: rgba(255,255,255,0.05);">
+                <div id="principalBar" style="background: linear-gradient(90deg, #06b6d4, #818cf8); transition: width 1s ease-out; border-radius: var(--radius-full) 0 0 var(--radius-full);"></div>
+                <div id="interestBar" style="background: linear-gradient(90deg, #f59e0b, #f43f5e); transition: width 1s ease-out; border-radius: 0 var(--radius-full) var(--radius-full) 0;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-top: var(--space-1);">
+                <span style="font-size: var(--fs-xs); color: var(--text-muted);" id="principalPercent"></span>
+                <span style="font-size: var(--fs-xs); color: var(--text-muted);" id="interestPercent"></span>
+              </div>
+            </div>
+
+            <div class="result-details" id="emiDetails">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- AI Analysis -->
+            <div class="ai-response" id="emiAiAnalysis">
+              <div class="ai-response-header">
+                <span class="ai-badge"><i class="fas fa-wand-magic-sparkles"></i> AI EMI Advisor</span>
+              </div>
+              <div class="ai-response-content" id="emiAiContent">
+                <div class="ai-loading">
+                  <div class="spinner"></div>
+                  Generating EMI optimization tips...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EMI Formula Section -->
+    <section class="section">
+      <div class="section-header animate-on-scroll">
+        <span class="section-label"><i class="fas fa-square-root-variable"></i> The Formula</span>
+        <h2 class="section-title">Reducing-Balance <span class="text-gradient">EMI Formula</span></h2>
+      </div>
+
+      <div class="glass-card animate-on-scroll" style="max-width: 700px; margin: 0 auto; text-align: center;">
+        <div style="font-family: var(--font-primary); font-size: var(--fs-2xl); font-weight: 700; margin-bottom: var(--space-6); color: var(--primary-300);">
+          EMI = P × R × (1 + R)<sup>N</sup> / ((1 + R)<sup>N</sup> − 1)
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); text-align: left;">
+          <div>
+            <strong style="color: var(--accent-cyan);">P</strong>
+            <span style="color: var(--text-secondary); font-size: var(--fs-sm);"> — Principal Loan Amount</span>
+          </div>
+          <div>
+            <strong style="color: var(--accent-amber);">R</strong>
+            <span style="color: var(--text-secondary); font-size: var(--fs-sm);"> — Monthly Interest Rate (Annual / 12 / 100)</span>
+          </div>
+          <div>
+            <strong style="color: var(--accent-emerald);">N</strong>
+            <span style="color: var(--text-secondary); font-size: var(--fs-sm);"> — Loan Tenure in Months</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">LoanLess AI</div>
+      <p class="footer-text">AI-Powered Financial Intelligence Platform</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="eligibility.html">Loan Eligibility</a>
+        <a href="credit-score.html">Credit Score</a>
+        <a href="emi-calculator.html">EMI Calculator</a>
+        <a href="ai-tips.html">AI Tips</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
